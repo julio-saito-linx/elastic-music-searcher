@@ -27,7 +27,11 @@ require.config({
 });
 
 require([
-    'backbone'
-], function (Backbone) {
+    'backbone',
+    './controllers/controller'
+], function (Backbone, Controller) {
+
+    new Controller();
+
     Backbone.history.start();
 });
