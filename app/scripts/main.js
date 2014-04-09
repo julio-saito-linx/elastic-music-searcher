@@ -16,21 +16,32 @@ require.config({
         bootstrap: {
             deps: ['jquery'],
             exports: 'jquery'
+        },
+        handlebars: {
+            exports: 'Handlebars'
         }
     },
     paths: {
         jquery: '../bower_components/jquery/dist/jquery',
         backbone: '../bower_components/backbone/backbone',
         underscore: '../bower_components/underscore/underscore',
-        bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap'
+        bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap',
+        rsvp: '../bower_components/rsvp/rsvp.amd',
+        handlebars: '../bower_components/handlebars/handlebars'
     }
 });
 
 require([
     'backbone',
     './controllers/controller',
-    './routes/mainRouter'
-], function (Backbone, Controller, MainRouter) {
+    './routes/mainRouter',
+    'rsvp'
+], function (Backbone, Controller, MainRouter, RSVP) {
+
+    // ensures that no errors will be omitted
+    RSVP.on('error', function(reason) {
+      console.error(reason.stack);
+    });
 
     var controller = new Controller();
     var router = new MainRouter({

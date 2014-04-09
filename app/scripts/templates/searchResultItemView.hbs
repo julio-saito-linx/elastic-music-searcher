@@ -1,0 +1,14 @@
+<td>
+    <button class="btn btn-default btn-xs table-button" data-id="{{id}}">
+        <span class="glyphicon glyphicon-play"></span>
+    </button>
+</td>
+{{!-- <td><button data-id="{{id}}" class="btnAddToPlaylist">add</button></td> --}}
+ <td><a href="/#search/1/artist:({{artist}})">{{artist}}</a></td>
+<td><a href="/#search/1/album:({{album}})">{{album}}</a></td>
+<td>{{track}}</td>
+<td><a href="/#search/1/title:({{title}})">{{title}}</a></td>
+<td class="hidden-xs">{{durationFormated}}</td>
+<td class="hidden-xs">{{sizeFormated}}</td>
+<td class="hidden-xs">{{bitRateFormated}}</td>
+<td class="hidden-xs"><a href="{{downloadLink}}">download</button></td>

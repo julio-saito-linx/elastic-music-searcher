@@ -6,6 +6,7 @@ define([
     'backbone',
     '../views/searchInputView',
     '../views/searchResultView',
+    '../views/searchFooterControlsView',
     '../models/searchModel',
     '../collections/songCollection'
 ], function (
@@ -14,6 +15,7 @@ define([
     Backbone,
     SearchInputView,
     SearchResultView,
+    SearchFooterControlsView,
     SearchModel,
     SongCollection
 ){
@@ -37,6 +39,7 @@ define([
             this.jMain = $('.main-container');
             this.jSearchInput = this.jMain.find('.search-input');
             this.jSearchResult = this.jMain.find('.search-result');
+            this.jSearchFooter = this.jMain.find('.search-footer');
         },
 
         initializeViews: function() {
@@ -47,16 +50,22 @@ define([
             this.searchResultView = new SearchResultView({
                 collection: this.songCollection
             });
+
+            this.searchFooter = new SearchFooterControlsView({
+                model: this.searchModel
+            });
         },
         
         renderViews: function() {
             this.searchInputView.render();
             this.searchResultView.render();
+            this.searchFooter.render();
         },
         
         addViewsToDOM: function() {
             this.jSearchInput.html(this.searchInputView.el);
             this.jSearchResult.html(this.searchResultView.el);
+            this.jSearchFooter.html(this.searchFooter.el);
         },
 
         home: function() {
@@ -65,6 +74,7 @@ define([
 
         search: function(page, query) {
             console.log('search ->', 'page:', page, 'query:', query);
+            this.searchModel.search(page, query);
         },
     });
 

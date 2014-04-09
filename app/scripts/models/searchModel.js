@@ -3,8 +3,9 @@
 define([
     'underscore',
     'backbone',
-    '../communicator/communicator'
-], function (_, Backbone, communicator) {
+    '../communicator/communicator',
+    '../libs/ElasticSearcher'
+], function (_, Backbone, communicator, ElasticSearcher) {
     'use strict';
 
     var SearchModel = Backbone.Model.extend({
@@ -23,9 +24,11 @@ define([
                 this.set('size', 8);
                 //  TODO: config.js
                 this.set('sort', 'artist:asc,album:asc,filename:asc');
-          
                 this.set('totalPages', this.totalPages.bind(this));
             }
+
+            // TODO: elastic search configuration
+            this.elasticSearcher = new ElasticSearcher('http://192.168.15.103:9200/music_library/song/');
         },
 
         defaults: {
@@ -38,12 +41,7 @@ define([
         //     return response;
         // },
 
-        search: function(searchText) {
-            this.set('query', searchText);
-            this.set('page', 1);
-
-            this.query = searchText;
-
+        navigateToSearch: function() {
             communicator.trigger('router:navigate', this.getSearchUrl());
         },
 
@@ -53,6 +51,19 @@ define([
             url += '/';
             url += this.get('query');
             return url;
+        },
+
+        search: function(page, query) {
+            this.set('page', page);
+            this.set('query', query);
+
+            this.elasticSearcher.searchElasticSearch(this)
+                .then(function (data) {
+                    //resets Collection
+                    communicator.trigger('search:result', data)
+                }.bind(this), function(reason) {
+                    console.assert(false, reason);
+                });
         },
 
         previousPage: function() {

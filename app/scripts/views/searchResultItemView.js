@@ -9,9 +9,9 @@ define([
     'use strict';
 
     var SearchResultItemView = Backbone.View.extend({
-        template: JST['app/scripts/templates/searchResultItemView.ejs'],
+        template: JST['app/scripts/templates/searchResultItemView.hbs'],
 
-        tagName: 'div',
+        tagName: 'tr',
 
         id: '',
 
@@ -20,11 +20,12 @@ define([
         events: {},
 
         initialize: function () {
-            this.listenTo(this.model, 'change', this.render);
+            //this.listenTo(this.model, 'change', this.render);
         },
 
         render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
+            var html = this.template(this.model.toJSON());
+            this.$el.html(html);
         }
     });
 
