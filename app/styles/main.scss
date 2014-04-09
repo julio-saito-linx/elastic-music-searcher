@@ -115,6 +115,20 @@ body {
 .search-footer-controls{
     text-align: right;
 }
-.search-input-controls{
-    text-align: right;
+
+.search-input {
+    .row{
+        margin-bottom: 10px;
+    }
+    .search-input-controls{
+        text-align: right;
+    }
+    .second-line-input{
+        margin-top: 14px;
+    }
+    .btn-default{
+        float: right;
+        margin-left: 10px;
+    }
+
 }
