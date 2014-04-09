@@ -17,7 +17,9 @@ define([
 
         id: '',
 
-        events: {},
+        events: {
+            'click #btnSearch': 'search'
+        },
 
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
@@ -25,7 +27,16 @@ define([
 
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
+
+            this.jBtnSearch = this.$el.find('#btnSearch');
+            this.jTxtSearch = this.$el.find('#txtSearch');
+        },
+
+        search: function() {
+            var searchText = this.jTxtSearch.val();
+            this.model.search(searchText);
         }
+
     });
 
     return SearchInputView;

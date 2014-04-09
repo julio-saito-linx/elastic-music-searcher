@@ -26,8 +26,6 @@ define([
             this.initializeViews();
             this.renderViews();
             this.addViewsToDOM();
-
-            // this.fetchPlaylist();
         },
 
         initializeModels: function() {
@@ -61,6 +59,13 @@ define([
             this.jSearchResult.html(this.searchResultView.el);
         },
 
+        home: function() {
+            console.log('go home');
+        },
+
+        search: function(page, query) {
+            console.log('search ->', 'page:', page, 'query:', query);
+        },
     });
 
     return Controller;

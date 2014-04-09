@@ -28,10 +28,14 @@ require.config({
 
 require([
     'backbone',
-    './controllers/controller'
-], function (Backbone, Controller) {
+    './controllers/controller',
+    './routes/mainRouter'
+], function (Backbone, Controller, MainRouter) {
 
-    new Controller();
+    var controller = new Controller();
+    var router = new MainRouter({
+        controller: controller
+    });
 
     Backbone.history.start();
 });
