@@ -91,15 +91,30 @@ body {
     }
 }
 
+
+
+
+@media screen and (max-width: 768px) {
+    .table-button{
+        font-size: 36px;
+        color: #777;
+    }
+}
+@media screen and (min-width: 768px) {
+    .table-button{
+        font-size: 11px;
+        color: #555;
+    }
+}
+
 .search-input > .row{
     margin-bottom: 30px;
 }
 
-.table-button{
-    font-size: 11px;
-}
 
 .search-footer-controls{
-    // float: right;
+    text-align: right;
+}
+.search-input-controls{
     text-align: right;
 }
