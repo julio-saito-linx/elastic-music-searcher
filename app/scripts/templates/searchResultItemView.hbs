@@ -1,6 +1,8 @@
 <td>
-    <button class="btn btn-default btn-xs table-button" data-id="{{id}}">
-        <span class="glyphicon glyphicon-play"></span>
+    <button class="btn btn-default btn-xs table-button" data-url="{{downloadLink}}" id="btnPlay">
+        <span class="glyphicon glyphicon-play">
+            <a id="downloadLink" href="{{downloadLink}}"></a>
+        </span>
     </button>
 </td>
 {{!-- <td><button data-id="{{id}}" class="btnAddToPlaylist">add</button></td> --}}
@@ -19,5 +21,5 @@
     <p>
         {{album}}
     </p>
-    <a href="{{downloadLink}}">{{title}}</button>
+    <a href="{{downloadLink}}">{{title}}</a>
 </td>

@@ -8,8 +8,9 @@ define([
     '../views/searchResultView',
     '../views/searchFooterControlsView',
     '../models/searchModel',
+    '../models/miniPlayerModel',
     '../collections/songCollection',
-    'socketIO'
+    'socketIO',
 ], function (
     $,
     _,
@@ -18,6 +19,7 @@ define([
     SearchResultView,
     SearchFooterControlsView,
     SearchModel,
+    MiniPlayerModel,
     SongCollection,
     socketIO
 ){
@@ -36,6 +38,7 @@ define([
         initializeModels: function() {
             this.searchModel = new SearchModel();
             this.songCollection = new SongCollection();
+            this.miniPlayerModel = new MiniPlayerModel();
         },
 
         initializeRegions: function() {
