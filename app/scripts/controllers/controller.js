@@ -8,7 +8,8 @@ define([
     '../views/searchResultView',
     '../views/searchFooterControlsView',
     '../models/searchModel',
-    '../collections/songCollection'
+    '../collections/songCollection',
+    'socketIO'
 ], function (
     $,
     _,
@@ -17,7 +18,8 @@ define([
     SearchResultView,
     SearchFooterControlsView,
     SearchModel,
-    SongCollection
+    SongCollection,
+    socketIO
 ){
     'use strict';
 
@@ -28,6 +30,7 @@ define([
             this.initializeViews();
             this.renderViews();
             this.addViewsToDOM();
+            this.initializeSocketIO();
         },
 
         initializeModels: function() {
@@ -66,6 +69,10 @@ define([
             this.jSearchInput.html(this.searchInputView.el);
             this.jSearchResult.html(this.searchResultView.el);
             this.jSearchFooter.html(this.searchFooter.el);
+        },
+
+        initializeSocketIO: function() {
+            this.socket = socketIO.connect('http://localhost:9003');
         },
 
         home: function() {

@@ -27,7 +27,8 @@ require.config({
         underscore: '../bower_components/underscore/underscore',
         bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap',
         rsvp: '../bower_components/rsvp/rsvp.amd',
-        handlebars: '../bower_components/handlebars/handlebars'
+        handlebars: '../bower_components/handlebars/handlebars',
+        socketIO: 'http://localhost:9003/socket.io/socket.io'
     }
 });
 
@@ -47,6 +48,9 @@ require([
     var router = new MainRouter({
         controller: controller
     });
+
+    window.__app = {};
+    window.__app.controller = controller;
 
     Backbone.history.start();
 });

@@ -41,7 +41,7 @@ define([
             /// downloadLink
             //////
             this.set('downloadLink', function() {
-                var filename = this.get('filename');
+                var filename = 'http://localhost:9004/go' + this.get('filename');
                 //return url_converter( filename );
                 return filename;
             }.bind(this));
