@@ -41,7 +41,8 @@ define([
             /// downloadLink
             //////
             this.set('downloadLink', function() {
-                var filename = 'http://localhost:9004/go' + this.get('filename');
+                // TODO: 192.168... must be dynamic
+                var filename = 'http://192.168.15.103:9004/go' + this.get('filename');
                 filename = encodeURI(filename);
                 //return url_converter( filename );
                 return  filename;

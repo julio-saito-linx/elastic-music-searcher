@@ -75,11 +75,11 @@ define([
         },
 
         initializeSocketIO: function() {
-            this.socket = socketIO.connect('http://localhost:9003');
+            this.socket = socketIO.connect('http://192.168.15.103:9003');
         },
 
         home: function() {
-            console.log('go home');
+            console.log('this is home');
         },
 
         search: function(page, query) {

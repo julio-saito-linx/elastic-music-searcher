@@ -28,7 +28,9 @@ require.config({
         bootstrap: '../bower_components/sass-bootstrap/dist/js/bootstrap',
         rsvp: '../bower_components/rsvp/rsvp.amd',
         handlebars: '../bower_components/handlebars/handlebars',
-        socketIO: 'http://localhost:9003/socket.io/socket.io'
+
+        // TODO: 192.168... must be dynamic
+        socketIO: 'http://192.168.15.103:9003/socket.io/socket.io'
     }
 });
 
