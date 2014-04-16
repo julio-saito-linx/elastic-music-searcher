@@ -19,7 +19,8 @@ define([
         className: '',
 
         events: {
-            'click #btnPlay': 'play'
+            'click #btnPlay': 'play',
+            'click #btnAdd': 'addSong'
         },
 
         initialize: function () {
@@ -67,6 +68,16 @@ define([
             var jSpanGlyphicon = jButton.find('.glyphicon');
             jSpanGlyphicon.removeClass('glyphicon-play');
             jSpanGlyphicon.addClass('glyphicon-stop');
+        },
+
+        addSong: function() {
+            // var jButton = $(e.target).parent();
+            // var jLink = jButton.find('#downloadLink');
+            // var url = jLink.attr('href');
+            communicator.trigger('socket', {
+                name: 'toSocket:playlist:add',
+                data: this.model.toJSON()
+            });
         }
     });
 

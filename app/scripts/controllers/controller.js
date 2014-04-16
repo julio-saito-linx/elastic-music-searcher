@@ -10,7 +10,8 @@ define([
     '../models/searchModel',
     '../models/miniPlayerModel',
     '../collections/songCollection',
-    'socketIO',
+    '../communicator/communicator',
+    'socketIO'
 ], function (
     $,
     _,
@@ -21,6 +22,7 @@ define([
     SearchModel,
     MiniPlayerModel,
     SongCollection,
+    communicator,
     socketIO
 ){
     'use strict';
@@ -75,7 +77,14 @@ define([
         },
 
         initializeSocketIO: function() {
+            //TODO: this must be dynamic
             this.socket = socketIO.connect('http://192.168.15.103:9003');
+
+            communicator.on('socket', function(options) {
+                this.socket.emit(options.name, options.data);
+            }.bind(this));
+            
+
         },
 
         home: function() {
