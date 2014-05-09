@@ -36,10 +36,11 @@ require.config({
 
 require([
     'backbone',
+    'bootstrap',
     './controllers/controller',
     './routes/mainRouter',
     'rsvp'
-], function (Backbone, Controller, MainRouter, RSVP) {
+], function (Backbone, bootstrap, Controller, MainRouter, RSVP) {
 
     // ensures that no errors will be omitted
     RSVP.on('error', function(reason) {

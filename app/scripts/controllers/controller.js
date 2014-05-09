@@ -9,6 +9,7 @@ define([
     '../views/searchFooterControlsView',
     '../models/searchModel',
     '../models/miniPlayerModel',
+    '../models/userModel',
     '../collections/songCollection',
     '../communicator/communicator',
     'socketIO'
@@ -21,6 +22,7 @@ define([
     SearchFooterControlsView,
     SearchModel,
     MiniPlayerModel,
+    UserModel,
     SongCollection,
     communicator,
     socketIO
@@ -41,6 +43,7 @@ define([
             this.searchModel = new SearchModel();
             this.songCollection = new SongCollection();
             this.miniPlayerModel = new MiniPlayerModel();
+            this.userModel = new UserModel();
         },
 
         initializeRegions: function() {
@@ -88,7 +91,13 @@ define([
         },
 
         home: function() {
-            console.log('this is home');
+            var user = window.location.search.substring(1).split('=')[1];
+            if(user){
+                this.userModel.set('userName', user);
+            }
+            console.log('this is home,', this.userModel.get('userName'));
+            //console.log(window.location.search.substring(1).split('=')[1])
+
         },
 
         search: function(page, query) {

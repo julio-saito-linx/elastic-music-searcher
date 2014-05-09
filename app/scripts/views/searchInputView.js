@@ -21,7 +21,8 @@ define([
             'keydown #txtSearch': 'processKeydown',
             'click #btnSearch': 'search',
             'click #btnPrevious': 'previousPage',
-            'click #btnNext': 'nextPage'
+            'click #btnNext': 'nextPage',
+            'change #dropDownPlayer': 'playerChanged'
         },
 
         initialize: function () {
@@ -63,6 +64,11 @@ define([
         nextPage: function() {
             this.model.nextPage();
             this.model.navigateToSearch();
+        },
+
+        playerChanged: function(selectedPlayer) {
+            console.log('selectedPlayer changed', selectedPlayer);
+            this.model.set('selectedPlayer', selectedPlayer);
         }
 
     });
