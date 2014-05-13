@@ -22,7 +22,7 @@ define([
             'click #btnSearch': 'search',
             'click #btnPrevious': 'previousPage',
             'click #btnNext': 'nextPage',
-            'change #dropDownPlayer': 'playerChanged'
+            'click #dropDownPlayers>li': 'playerChanged'
         },
 
         initialize: function () {
@@ -66,9 +66,13 @@ define([
             this.model.navigateToSearch();
         },
 
-        playerChanged: function(selectedPlayer) {
-            console.log('selectedPlayer changed', selectedPlayer);
+        playerChanged: function(e) {
+            var selectedPlayer = $(e.target);
+            var jASelected = this.$el.find('#dropDownPlayerSelected');
+            jASelected.text(selectedPlayer.text());
+
             this.model.set('selectedPlayer', selectedPlayer);
+            console.log('this.model.get', this.model.get('selectedPlayer'));
         }
 
     });

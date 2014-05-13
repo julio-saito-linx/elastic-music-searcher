@@ -74,7 +74,7 @@ define([
             // var jButton = $(e.target).parent();
             // var jLink = jButton.find('#downloadLink');
             // var url = jLink.attr('href');
-            communicator.trigger('socket', {
+            communicator.trigger('socket:message', {
                 name: 'toSocket:playlist:add',
                 data: this.model.toJSON()
             });
