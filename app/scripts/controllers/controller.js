@@ -83,22 +83,31 @@ define([
             //TODO: this must be dynamic
             this.socket = socketIO.connect('http://192.168.15.103:9003');
 
-            communicator.on('socket', function(options) {
+            // first connection
+            // server -> client
+            this.socket.on('connect', function (){
+                console.info('connected to socket.io');
+                // client -> server
+                this.socket.emit('client:connection', {
+                    appName: '2-musicSearcher'
+                });
+            }.bind(this));
+
+            // server -> client
+            this.socket.on('server:status', function (data){
+                console.info('server:status', data);
+                this.userModel.set('serverData', data.serverData);
+            }.bind(this));
+
+            // communicator -> server
+            communicator.on('socket:message', function(options) {
+                // client -> server
                 this.socket.emit(options.name, options.data);
             }.bind(this));
-            
 
         },
 
-        home: function() {
-            var user = window.location.search.substring(1).split('=')[1];
-            if(user){
-                this.userModel.set('userName', user);
-            }
-            console.log('this is home,', this.userModel.get('userName'));
-            //console.log(window.location.search.substring(1).split('=')[1])
-
-        },
+        home: function() {},
 
         search: function(page, query) {
             console.log('search ->', 'page:', page, 'query:', query);

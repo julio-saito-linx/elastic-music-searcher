@@ -306,9 +306,9 @@ module.exports = function (grunt) {
             'handlebars',
             'compass:server',
             'connect:livereload',
-            //'open:server',
-            'watch:handlebars',
-            'watch:compass',
+            // //'open:server',
+            // 'watch:handlebars',
+            // 'watch:compass',
             'watch:livereload'
         ]);
     });
