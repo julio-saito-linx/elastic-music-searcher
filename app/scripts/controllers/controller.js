@@ -80,29 +80,43 @@ define([
         },
 
         initializeSocketIO: function() {
+            // Getting SID from querystring
+            var querystringName = window.location.search.substring(1).split('=')[0];
+            var querystringValue = window.location.search.substring(1).split('=')[1];
+            if(querystringName === 'sid'){
+                this.userModel.set('sid', querystringValue);
+            }
+            console.log('this.userModel.sid:', this.userModel.get('sid'));
+
+            var clientID = {
+                appName: '2-musicSearcher',
+                sid: this.userModel.get('sid')
+            };
+
             //TODO: this must be dynamic
             this.socket = socketIO.connect('http://192.168.15.103:9003');
 
-            // first connection
+            // first connection -> send SID to server
             // server -> client
             this.socket.on('connect', function (){
-                console.info('connected to socket.io');
                 // client -> server
-                this.socket.emit('client:connection', {
-                    appName: '2-musicSearcher'
-                });
+                this.socket.emit('client:connection', clientID);
             }.bind(this));
 
-            // server -> client
-            this.socket.on('server:status', function (data){
-                console.info('server:status', data);
-                this.userModel.set('serverData', data.serverData);
+            this.socket.on('server:userName', function (userName){
+                $('#socketInfo').html('connected as ' + userName);
             }.bind(this));
 
+
+            //////////////////////////
             // communicator -> server
+            //////////////////////////
             communicator.on('socket:message', function(options) {
                 // client -> server
-                this.socket.emit(options.name, options.data);
+                this.socket.emit(options.name, {
+                    clientID: clientID,
+                    data: options.data
+                });
             }.bind(this));
 
         },
