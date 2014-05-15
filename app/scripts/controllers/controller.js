@@ -88,7 +88,7 @@ define([
             }
             console.log('this.userModel.sid:', this.userModel.get('sid'));
 
-            var clientID = {
+            var clientInfo = {
                 appName: '2-musicSearcher',
                 sid: this.userModel.get('sid')
             };
@@ -100,12 +100,28 @@ define([
             // server -> client
             this.socket.on('connect', function (){
                 // client -> server
-                this.socket.emit('client:connection', clientID);
+                this.socket.emit('client:connection', clientInfo);
             }.bind(this));
 
             this.socket.on('server:userName', function (userName){
-                $('#socketInfo').html('connected as ' + userName);
+                
+                clientInfo.userName = userName;
+                
+                // userName received
+                $('#socketInfo').html('connected as ' + clientInfo.userName);
+
+                // request list of players
+                this.socket.emit('client:request:players', clientInfo);
+
             }.bind(this));
+
+
+            this.socket.on('server:playersList', function (playersList){
+                
+                console.log('playersList:', playersList);
+
+            }.bind(this));
+
 
 
             //////////////////////////
@@ -114,7 +130,7 @@ define([
             communicator.on('socket:message', function(options) {
                 // client -> server
                 this.socket.emit(options.name, {
-                    clientID: clientID,
+                    clientInfo: clientInfo,
                     data: options.data
                 });
             }.bind(this));
