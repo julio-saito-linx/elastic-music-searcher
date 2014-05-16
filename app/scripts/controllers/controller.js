@@ -86,12 +86,12 @@ define([
             if(querystringName === 'sid'){
                 this.userModel.set('sid', querystringValue);
             }
-            console.log('this.userModel.sid:', this.userModel.get('sid'));
 
             var clientInfo = {
                 appName: '2-musicSearcher',
                 sid: this.userModel.get('sid')
             };
+            console.info('me:', clientInfo);
 
             //TODO: this must be dynamic
             this.socket = socketIO.connect('http://192.168.15.103:9003');
@@ -101,6 +101,9 @@ define([
             this.socket.on('connect', function (){
                 // client -> server
                 this.socket.emit('client:connection', clientInfo);
+
+                // request list of players
+                this.socket.emit('whoIsConnected', clientInfo);
             }.bind(this));
 
             this.socket.on('server:userName', function (userName){
@@ -110,16 +113,12 @@ define([
                 // userName received
                 $('#socketInfo').html('connected as ' + clientInfo.userName);
 
-                // request list of players
-                this.socket.emit('client:request:players', clientInfo);
 
             }.bind(this));
 
 
-            this.socket.on('server:playersList', function (playersList){
-                
-                console.log('playersList:', playersList);
-
+            this.socket.on('server:clientList', function (clientList){
+                console.log('clientList:', clientList);
             }.bind(this));
 
 
