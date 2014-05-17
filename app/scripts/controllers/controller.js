@@ -11,6 +11,7 @@ define([
     '../models/miniPlayerModel',
     '../models/userModel',
     '../collections/songCollection',
+    '../collections/playersCollection',
     '../communicator/communicator',
     'socketIO'
 ], function (
@@ -24,6 +25,7 @@ define([
     MiniPlayerModel,
     UserModel,
     SongCollection,
+    PlayersCollection,
     communicator,
     socketIO
 ){
@@ -39,13 +41,6 @@ define([
             this.initializeSocketIO();
         },
 
-        initializeModels: function() {
-            this.searchModel = new SearchModel();
-            this.songCollection = new SongCollection();
-            this.miniPlayerModel = new MiniPlayerModel();
-            this.userModel = new UserModel();
-        },
-
         initializeRegions: function() {
             this.jMain = $('.main-container');
             this.jSearchInput = this.jMain.find('.search-input');
@@ -53,9 +48,18 @@ define([
             this.jSearchFooter = this.jMain.find('.search-footer');
         },
 
+        initializeModels: function() {
+            this.searchModel = new SearchModel();
+            this.songCollection = new SongCollection();
+            this.miniPlayerModel = new MiniPlayerModel();
+            this.userModel = new UserModel();
+            this.playersCollection = new PlayersCollection();
+        },
+
         initializeViews: function() {
             this.searchInputView = new SearchInputView({
-                model: this.searchModel
+                model: this.searchModel,
+                playersCollection: this.playersCollection
             });
 
             this.searchResultView = new SearchResultView({
@@ -103,7 +107,7 @@ define([
                 this.socket.emit('client:connection', clientInfo);
 
                 // request list of players
-                this.socket.emit('whoIsConnected', clientInfo);
+                this.socket.emit('client:request:players:connected', clientInfo);
             }.bind(this));
 
             this.socket.on('server:userName', function (userName){
@@ -117,8 +121,15 @@ define([
             }.bind(this));
 
 
-            this.socket.on('server:clientList', function (clientList){
-                console.log('clientList:', clientList);
+            this.socket.on('server:response:players:connected', function (playersList){
+                console.log('playersList:', playersList);
+
+                this.playersCollection.reset(playersList);
+                // this.clearPlayerDropDown();
+                // for (var i = 0; i < playersList.length; i++) {
+                //     var player = playersList[i];
+                //     this.addPlayerDropDown(player);      
+                // };
             }.bind(this));
 
 
@@ -134,6 +145,15 @@ define([
                 });
             }.bind(this));
 
+        },
+
+        clearPlayerDropDown: function() {
+            this.searchModel.set('players', []);
+        },
+
+        addPlayerDropDown: function(newPlayer) {
+            var playerList = this.searchModel.get('players');
+            playerList.push(newPlayer);
         },
 
         home: function() {},

@@ -4,8 +4,17 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'templates'
-], function ($, _, Backbone, JST) {
+    'templates',
+    'models/playerModel',
+    'views/playerDropView'
+], function (
+    $,
+    _,
+    Backbone,
+    JST,
+    PlayerModel,
+    PlayerDropView
+) {
     'use strict';
 
     var SearchInputView = Backbone.View.extend({
@@ -25,8 +34,9 @@ define([
             'click #dropDownPlayers>li': 'playerChanged'
         },
 
-        initialize: function () {
+        initialize: function (options) {
             this.listenTo(this.model, 'change:query', this.render);
+            this.listenTo(options.playersCollection, 'reset', this.renderPlayers);
         },
 
         render: function () {
@@ -36,6 +46,10 @@ define([
 
         initializeJqueryElements: function() {
             this.jTxtSearch = this.$el.find('#txtSearch');
+
+            this.jASelected = this.$el.find('#dropDownPlayerSelected');
+            this.jUlDropDownHome = this.$el.find('.dropdownHome');
+
             // this.jBtnSearch = this.$el.find('#btnSearch');
             // this.jBtnNext = this.$el.find('#btnNext');
 
@@ -68,11 +82,23 @@ define([
 
         playerChanged: function(e) {
             var selectedPlayer = $(e.target);
-            var jASelected = this.$el.find('#dropDownPlayerSelected');
-            jASelected.text(selectedPlayer.text());
+            this.jASelected.text(selectedPlayer.text());
 
             this.model.set('selectedPlayer', selectedPlayer);
             console.log('this.model.get', this.model.get('selectedPlayer'));
+        },
+
+        renderPlayers: function(playerCollection) {
+            // clean UL
+            //this.jUlDropDownHome.html('');
+
+            var playerDropView = new PlayerDropView({
+                collection: playerCollection
+            });
+
+            playerDropView.render();
+
+            this.jUlDropDownHome.append(playerDropView.el);
         }
 
     });
