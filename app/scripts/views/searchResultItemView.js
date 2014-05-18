@@ -24,7 +24,7 @@ define([
         },
 
         initialize: function () {
-            //this.listenTo(this.model, 'change', this.render);
+            communicator.on('player:selected', this.playerSelected, this);
         },
 
         render: function () {
@@ -70,10 +70,21 @@ define([
             jSpanGlyphicon.addClass('glyphicon-stop');
         },
 
+        playerSelected: function(player) {
+            this.playerToSend = player;
+        },
+
         addSong: function() {
+            if(!this.playerToSend){
+                return;
+            }
+            
             communicator.trigger('socket:message', {
                 name: 'toSocket:playlist:add',
-                data: this.model.toJSON()
+                data: {
+                    player: this.playerToSend.toJSON(),
+                    song: this.model.toJSON()
+                }
             });
         }
     });
