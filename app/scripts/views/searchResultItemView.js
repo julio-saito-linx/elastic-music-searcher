@@ -76,9 +76,10 @@ define([
 
         addSong: function() {
             if(!this.playerToSend){
+                alert('Please, select a player.');
                 return;
             }
-            
+
             communicator.trigger('socket:message', {
                 name: 'toSocket:playlist:add',
                 data: {
