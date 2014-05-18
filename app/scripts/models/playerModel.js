@@ -11,7 +11,7 @@ define([
 
         initialize: function() {
             this.set('playerName', (function() {
-                return this.get('userName') + '-['+ this.get('sid') +']';
+                return this.get('roomName') + '-['+ this.get('sid') +']';
             }.bind(this))());
         },
 

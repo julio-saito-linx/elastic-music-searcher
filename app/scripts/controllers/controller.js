@@ -9,7 +9,7 @@ define([
     'views/searchFooterControlsView',
     'models/searchModel',
     'models/miniPlayerModel',
-    'models/userModel',
+    'models/roomModel',
     'collections/songCollection',
     'collections/playersCollection',
     'models/playerModel',
@@ -25,7 +25,7 @@ define([
     SearchFooterControlsView,
     SearchModel,
     MiniPlayerModel,
-    UserModel,
+    RoomModel,
     SongCollection,
     PlayersCollection,
     PlayerModel,
@@ -57,7 +57,7 @@ define([
             this.searchModel = new SearchModel();
             this.songCollection = new SongCollection();
             this.miniPlayerModel = new MiniPlayerModel();
-            this.userModel = new UserModel();
+            this.roomModel = new RoomModel();
             this.playersCollection = new PlayersCollection();
         },
 
@@ -98,12 +98,12 @@ define([
             var querystringName = window.location.search.substring(1).split('=')[0];
             var querystringValue = window.location.search.substring(1).split('=')[1];
             if(querystringName === 'sid'){
-                this.userModel.set('sid', querystringValue);
+                this.roomModel.set('sid', querystringValue);
             }
 
             var clientInfo = {
                 appName: '2-musicSearcher',
-                sid: this.userModel.get('sid')
+                sid: this.roomModel.get('sid')
             };
             console.info('me:', clientInfo);
 
@@ -120,12 +120,12 @@ define([
                 this.socket.emit('client:request:players:connected', clientInfo);
             }.bind(this));
 
-            this.socket.on('server:userName', function (userName){
+            this.socket.on('server:roomName', function (roomName){
                 
-                clientInfo.userName = userName;
+                clientInfo.roomName = roomName;
                 
-                // userName received
-                $('#socketInfo').html('connected as ' + clientInfo.userName);
+                // roomName received
+                $('#socketInfo').html(clientInfo.roomName);
 
 
             }.bind(this));
