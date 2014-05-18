@@ -1,8 +1,9 @@
 /*global RSVP */
 define([
-  'rsvp'
+  'rsvp',
+  'underscore'
 ],
-function( RSVP ) {
+function( RSVP, _ ) {
   'use strict';
 
   var ElasticSearcher = function(localuri){
