@@ -4,15 +4,17 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    '../views/searchInputView',
-    '../views/searchResultView',
-    '../views/searchFooterControlsView',
-    '../models/searchModel',
-    '../models/miniPlayerModel',
-    '../models/userModel',
-    '../collections/songCollection',
-    '../collections/playersCollection',
-    '../communicator/communicator',
+    'views/searchInputView',
+    'views/searchResultView',
+    'views/searchFooterControlsView',
+    'models/searchModel',
+    'models/miniPlayerModel',
+    'models/userModel',
+    'collections/songCollection',
+    'collections/playersCollection',
+    'models/playerModel',
+    'views/playerDropView',
+    'communicator/communicator',
     'socketIO'
 ], function (
     $,
@@ -26,6 +28,8 @@ define([
     UserModel,
     SongCollection,
     PlayersCollection,
+    PlayerModel,
+    PlayerDropView,
     communicator,
     socketIO
 ){
@@ -44,6 +48,7 @@ define([
         initializeRegions: function() {
             this.jMain = $('.main-container');
             this.jSearchInput = this.jMain.find('.search-input');
+            this.jPlayersDropDown = this.jMain.find('.player-dropDown');
             this.jSearchResult = this.jMain.find('.search-result');
             this.jSearchFooter = this.jMain.find('.search-footer');
         },
@@ -58,9 +63,12 @@ define([
 
         initializeViews: function() {
             this.searchInputView = new SearchInputView({
-                model: this.searchModel,
-                playersCollection: this.playersCollection
+                model: this.searchModel
             });
+
+            this.playersDropView = new PlayerDropView({
+               collection: this.playersCollection
+            })
 
             this.searchResultView = new SearchResultView({
                 collection: this.songCollection
@@ -73,12 +81,14 @@ define([
         
         renderViews: function() {
             this.searchInputView.render();
+            this.playersDropView.render();
             this.searchResultView.render();
             this.searchFooter.render();
         },
         
         addViewsToDOM: function() {
             this.jSearchInput.html(this.searchInputView.el);
+            this.jPlayersDropDown.html(this.playersDropView.el);
             this.jSearchResult.html(this.searchResultView.el);
             this.jSearchFooter.html(this.searchFooter.el);
         },
@@ -145,15 +155,6 @@ define([
                 });
             }.bind(this));
 
-        },
-
-        clearPlayerDropDown: function() {
-            this.searchModel.set('players', []);
-        },
-
-        addPlayerDropDown: function(newPlayer) {
-            var playerList = this.searchModel.get('players');
-            playerList.push(newPlayer);
         },
 
         home: function() {},

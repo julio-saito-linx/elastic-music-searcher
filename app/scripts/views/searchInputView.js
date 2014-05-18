@@ -4,16 +4,12 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'templates',
-    'models/playerModel',
-    'views/playerDropView'
+    'templates'
 ], function (
     $,
     _,
     Backbone,
-    JST,
-    PlayerModel,
-    PlayerDropView
+    JST
 ) {
     'use strict';
 
@@ -36,7 +32,6 @@ define([
 
         initialize: function (options) {
             this.listenTo(this.model, 'change:query', this.render);
-            this.listenTo(options.playersCollection, 'reset', this.renderPlayers);
         },
 
         render: function () {
@@ -79,27 +74,6 @@ define([
             this.model.nextPage();
             this.model.navigateToSearch();
         },
-
-        playerChanged: function(e) {
-            var selectedPlayer = $(e.target);
-            this.jASelected.text(selectedPlayer.text());
-
-            this.model.set('selectedPlayer', selectedPlayer);
-            console.log('this.model.get', this.model.get('selectedPlayer'));
-        },
-
-        renderPlayers: function(playerCollection) {
-            // clean UL
-            //this.jUlDropDownHome.html('');
-
-            var playerDropView = new PlayerDropView({
-                collection: playerCollection
-            });
-
-            playerDropView.render();
-
-            this.jUlDropDownHome.append(playerDropView.el);
-        }
 
     });
 

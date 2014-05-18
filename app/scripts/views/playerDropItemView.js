@@ -4,8 +4,9 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'templates'
-], function ($, _, Backbone, JST) {
+    'templates',
+    '../communicator/communicator',
+], function ($, _, Backbone, JST, communicator) {
     'use strict';
 
     var PlayerDropItemView = Backbone.View.extend({
@@ -31,6 +32,7 @@ define([
 
         playerSelected: function(e) {
             this.model.collection.selectPlayer(this.model);
+            communicator.trigger('player:selected', this.model);
         }
     });
 
