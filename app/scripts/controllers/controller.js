@@ -78,14 +78,14 @@ define([
                 model: this.searchModel
             });
         },
-        
+
         renderViews: function() {
             this.searchInputView.render();
             this.playersDropView.render();
             this.searchResultView.render();
             this.searchFooter.render();
         },
-        
+
         addViewsToDOM: function() {
             this.jSearchInput.html(this.searchInputView.el);
             this.jPlayersDropDown.html(this.playersDropView.el);
@@ -108,7 +108,7 @@ define([
             console.info('me:', clientInfo);
 
             //TODO: this must be dynamic
-            this.socket = socketIO.connect('http://192.168.15.103:9003');
+            this.socket = socketIO.connect('http://socketserver.azk.dev');
 
             // first connection -> send SID to server
             // server -> client
@@ -121,9 +121,9 @@ define([
             }.bind(this));
 
             this.socket.on('server:roomName', function (roomName){
-                
+
                 clientInfo.roomName = roomName;
-                
+
                 // roomName received
                 $('#socketInfo').html(clientInfo.roomName);
 
@@ -138,7 +138,7 @@ define([
                 // this.clearPlayerDropDown();
                 // for (var i = 0; i < playersList.length; i++) {
                 //     var player = playersList[i];
-                //     this.addPlayerDropDown(player);      
+                //     this.addPlayerDropDown(player);
                 // };
             }.bind(this));
 

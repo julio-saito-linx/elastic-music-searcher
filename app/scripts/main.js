@@ -30,7 +30,7 @@ require.config({
         handlebars: '../bower_components/handlebars/handlebars',
 
         // TODO: 192.168... must be dynamic
-        socketIO: 'http://192.168.15.103:9003/socket.io/socket.io'
+        socketIO: 'http://socketserver.azk.dev/socket.io/socket.io'
     }
 });
 

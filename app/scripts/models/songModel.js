@@ -42,12 +42,11 @@ define([
             //////
             this.set('downloadLink', function() {
                 // TODO: 192.168... must be dynamic
-                var filename = 'http://192.168.15.103:9004/go' + this.get('filename');
+                var filename = 'http://mp3server.azk.dev' + this.get('filename');
                 filename = encodeURI(filename);
                 //return url_converter( filename );
                 return  filename;
             }.bind(this));
-            
 
             var fileName = this.get('filename');
             var fileNameParts = fileName.split('/');
@@ -57,7 +56,7 @@ define([
             var artist = this.get('artist');
             var album = this.get('album');
             var title = this.get('title');
-            
+
             if(!artist || artist.length === 0){
                 this.set('artist', '# '+ lastDir);
             }

@@ -19,7 +19,7 @@ define([
             }
             else{
                 this.set('page', 1);
-          
+
                 //  TODO: config.js
                 this.set('size', 8);
                 //  TODO: config.js
@@ -28,7 +28,7 @@ define([
             }
 
             // TODO: elastic search configuration
-            this.elasticSearcher = new ElasticSearcher('http://192.168.15.103:9200/music_library/song/');
+            this.elasticSearcher = new ElasticSearcher('http://azk.dev:9200/music_library/song/');
         },
 
         defaults: {
@@ -72,12 +72,12 @@ define([
                 this.set('page', --currentPage);
             }
         },
-        
+
         nextPage: function() {
             var total = this.get('total');
             var pageSize = this.get('size');
             var currentPage = this.get('page');
-    
+
             var totalpages = Math.ceil(total/pageSize);
             if(currentPage < totalpages){
                 this.set('page', ++currentPage);
@@ -88,7 +88,7 @@ define([
             var total = this.get('total');
             var pageSize = this.get('size');
             var totalpages = Math.ceil(total/pageSize);
-    
+
             return totalpages;
         },
     });
