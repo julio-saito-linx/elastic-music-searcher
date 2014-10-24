@@ -28,7 +28,8 @@ define([
             }
 
             // TODO: elastic search configuration
-            this.elasticSearcher = new ElasticSearcher('http://azk.dev:9200/music_library/song/');
+            // this.elasticSearcher = new ElasticSearcher('http://azk.dev:9200/music_library/song/');
+            this.elasticSearcher = new ElasticSearcher('http://azk.dev:9200/music_library_local/songs/');
         },
 
         defaults: {
